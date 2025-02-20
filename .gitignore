@@ -1,0 +1,7 @@
+# User folders
+.venv/
+venv/
+
+# Compiled Python
+*.egg-info
+__pycache__/
