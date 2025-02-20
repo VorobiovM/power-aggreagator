@@ -1,13 +1,23 @@
 import os
+import sys
 from pathlib import Path
 
 from PyQt6.QtCore import pyqtSignal
-from PyQt6.QtWidgets import QComboBox, QHBoxLayout, QLineEdit, QPushButton, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import (
+    QComboBox,
+    QHBoxLayout,
+    QLineEdit,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+)
 
 from power_aggregator.data import Baseline
 
-
-ROOT = Path(__file__).parents[1]
+if getattr(sys, "frozen", False):
+    base_path = sys._MEIPASS  # Path of the PyInstaller temp directory
+else:
+    base_path = os.path.abspath(".")
 
 
 class ActionMenu(QWidget):
@@ -42,7 +52,7 @@ class ActionMenu(QWidget):
         self.button_export.pressed.connect(self.emit_save)
 
     def readBaselines(self):
-        path = Path(ROOT, "data/baselines")
+        path = Path(base_path, "src/power_aggregator/data/baselines")
         for _, _, files in os.walk(path):
             for file in files:
                 self.baselines.append(Baseline(Path(path, file)))

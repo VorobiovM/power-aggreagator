@@ -1,16 +1,20 @@
+import os
+import sys
 from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
-
 from PyQt6.QtCharts import QChart, QChartView, QLineSeries
-from PyQt6.QtCore import Qt, QPointF, QRectF, pyqtSlot
+from PyQt6.QtCore import QPointF, QRectF, Qt, pyqtSlot
 from PyQt6.QtGui import QBrush, QPainter, QPen
 
 from power_aggregator.data import Aggregator, Baseline
 
-
-ROOT = Path(__file__).parents[3]
+if getattr(sys, "frozen", False):
+    base_path = sys.executable  # Path of the PyInstaller executable
+    base_path = Path(base_path).parent
+else:
+    base_path = os.path.abspath(".")
 
 
 class DraggableGraph(QChartView):
@@ -73,7 +77,7 @@ class DraggableGraph(QChartView):
     def exportCsv(self, path: str):
         if not path.endswith(".csv"):
             path += ".csv"
-        path = Path(ROOT, path)
+        path = Path(base_path, path)
         points = [p.y() for p in self.series.points()]
         df = pd.DataFrame(points, columns=["power"])
         df.to_csv(path)
