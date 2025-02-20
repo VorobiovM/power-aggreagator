@@ -43,7 +43,7 @@ class ScrollableButtons(QWidget):
                 btn.setCheckable(True)
                 btn.setBaseSize(80, 80)
                 btn.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-                image = QPixmap(Path("src/power_aggregator/", aggregator.logo).as_posix())
+                image = QPixmap(str(Path("src/power_aggregator/", aggregator.logo)))
                 icon = QIcon(image)
                 btn.setIcon(icon)
                 btn.setIconSize(btn.size() * 0.1)
