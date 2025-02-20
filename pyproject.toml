@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "power_aggregator"
 dynamic = ["version"]
-dependencies = ["numpy", "pandas", "PyQt6"]
+dependencies = ["numpy", "pandas", "PyQt6", "PyQt6-Charts"]
 requires-python = ">= 3.11"
 authors = [{ name = "Mihail Vorobiov", email = "mihail.vorobiov@gmail.com" }]
 description = "Power drag-n-drop aggregator"
@@ -24,13 +24,11 @@ classifiers = [
 
 [project.optional-dependencies]
 dev = ["black", "coverage", "coveralls", "isort", "pytest", "sphinx"]
+dist = ["pyinstaller"]
 
-[project.urls]
-Repository = "https://github.com/nilmtk/nilmtk"
-Download = "https://github.com/nilmtk/nilmtk/tarball/master#egg=nilmtk-dev"
-
-[tool.setuptools]
-packages = ["nilmtk"]
+# [project.urls]
+# Repository = "https://github.com/VorobiovM/"
+# Download = "https://github.com/VorobiovM/"
 
 [tool.setuptools_scm]
 version_scheme = "guess-next-dev"

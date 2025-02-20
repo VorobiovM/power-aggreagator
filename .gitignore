@@ -5,3 +5,6 @@ venv/
 # Compiled Python
 *.egg-info
 __pycache__/
+
+# Distribution
+*.csv
