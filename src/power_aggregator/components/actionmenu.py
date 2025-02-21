@@ -16,8 +16,10 @@ from power_aggregator.data import Baseline
 
 if getattr(sys, "frozen", False):
     base_path = sys._MEIPASS  # Path of the PyInstaller temp directory
+    baseline_path = Path(base_path, "data/baselines")
 else:
     base_path = os.path.abspath(".")
+    baseline_path = Path(base_path, "src/power_aggregator/data/baselines")
 
 
 class ActionMenu(QWidget):
@@ -52,7 +54,7 @@ class ActionMenu(QWidget):
         self.button_export.pressed.connect(self.emit_save)
 
     def readBaselines(self):
-        path = Path(base_path, "src/power_aggregator/data/baselines")
+        path = Path(baseline_path)
         for _, _, files in os.walk(path):
             for file in files:
                 self.baselines.append(Baseline(Path(path, file)))

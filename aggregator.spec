@@ -5,7 +5,12 @@ a = Analysis(
     ['src/power_aggregator/__main__.py'],
     pathex=[],
     binaries=[],
-    datas=[('src/power_aggregator/data/baselines', 'src/power_aggregator/data/baselines'), ('src/power_aggregator/data/aggregators', 'src/power_aggregator/data/aggregators'), ('src/power_aggregator/pictures', 'src/power_aggregator/pictures')],
+    datas=[
+        ('src/power_aggregator/data/baselines/*.json', 'data/baselines'),
+        ('src/power_aggregator/data/aggregators/*.json', 'data/aggregators'),
+        ('src/power_aggregator/pictures/*.png', 'pictures'),
+        ('favicon.png', 'favicon.png')
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -35,4 +40,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon="favicon.ico",
 )

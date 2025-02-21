@@ -17,8 +17,12 @@ from power_aggregator.data import Aggregator
 
 if getattr(sys, "frozen", False):
     base_path = sys._MEIPASS  # Path of the PyInstaller temp directory
+    aggregators_path = Path(base_path, "data/aggregators")
+    pictures_path = base_path
 else:
     base_path = os.path.abspath(".")
+    aggregators_path = Path(base_path, "src/power_aggregator/data/aggregators")
+    pictures_path = Path(base_path, "src/power_aggregator")
 
 
 class ScrollableButtons(QWidget):
@@ -34,7 +38,7 @@ class ScrollableButtons(QWidget):
         self.aggregators = []
         self.buttons = []
 
-        path = Path(base_path, "src/power_aggregator/data/aggregators")
+        path = Path(aggregators_path)
         for _, _, files in os.walk(path):
             for file in files:
                 aggregator = Aggregator(Path(path, file))
@@ -43,10 +47,12 @@ class ScrollableButtons(QWidget):
                 btn.setCheckable(True)
                 btn.setBaseSize(80, 80)
                 btn.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-                image = QPixmap(str(Path("src/power_aggregator/", aggregator.logo)))
+                image_path = Path(pictures_path, aggregator.logo)
+                image = QPixmap(image_path.as_posix())
                 icon = QIcon(image)
                 btn.setIcon(icon)
                 btn.setIconSize(btn.size() * 0.1)
+                btn.setToolTip(aggregator.name)
                 btn.clicked.connect(self.on_button_clicked)
                 self.buttons.append(btn)
                 button_layout.addWidget(btn)

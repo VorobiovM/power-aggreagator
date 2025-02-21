@@ -1,6 +1,18 @@
+import os
+import sys
+from pathlib import Path
+
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QHBoxLayout, QMainWindow, QVBoxLayout, QWidget
 
 from power_aggregator.components import ActionMenu, DraggableGraph, ScrollableButtons
+
+if getattr(sys, "frozen", False):
+    base_path = sys._MEIPASS  # Path of the PyInstaller temp directory
+    favicon = Path(base_path, "favicon.png")
+else:
+    base_path = os.path.abspath(".")
+    favicon = Path(base_path, "favicon.png")
 
 
 class MainWindow(QMainWindow):
@@ -28,6 +40,8 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container.setLayout(l_layout)
         self.setCentralWidget(container)
+
+        self.setWindowIcon(QIcon(favicon.as_posix()))
 
         # Force first draw
         self.graph.changeBaselineFirst(self.menu.baselines[self.menu.combo_box.currentIndex()])
